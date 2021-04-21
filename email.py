@@ -28,14 +28,15 @@ def mysendmail(toaddrs,final_msg,**kwargs):
     msg['Cc']=",".join(cc_addresses)
     msg['Subject'] = subject
     msg.attach(MIMEText(final_msg, 'plain'))
-    filename = kwargs.get('attachment',None)
-    if type(filename)!=type(None):
-        attachment = open(filename, "rb")
-        part = MIMEBase('application', 'octet-stream')
-        part.set_payload((attachment).read())
-        encoders.encode_base64(part)
-        part.add_header('Content-Disposition', "attachment; filename= %s" % filename)
-        msg.attach(part)
+    FILENAME = kwargs.get('attachment',None)
+    if type(FILENAME)!=type(None):
+        for filename in FILENAME:
+            attachment = open(filename, "rb")
+            part = MIMEBase('application', 'octet-stream')
+            part.set_payload((attachment).read())
+            encoders.encode_base64(part)
+            part.add_header('Content-Disposition', "attachment; filename= %s" % filename)
+            msg.attach(part)
     
     server = smtplib.SMTP('smtp.gmail.com', 587)
     server.ehlo()
@@ -215,5 +216,5 @@ for individual in [np.random.randint(len(Email_names))] if test_mode_and_send el
                     name=name,
                     fromaddr=your_email_id,
                     password=your_password,
-                    attachment=None if attachment_extention==' ' else f"Attachments/{roll}{attachment_extention}"
+                    attachment=f"Attachments/{roll}.txt" if attachment_extention==' ' else f"Attachments/{roll}{attachment_extention}"
             )
