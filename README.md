@@ -1,6 +1,6 @@
 # Bulk-Email
 
-This repository contains a simple python script that can send emails to multiple individuals. This code was built to primarily solve the problem of sending grades and scores of students individually. 
+This repository contains a simple python script that can send emails to multiple individuals. This code was built to primarily solve the problem of sending grades and scores of students individually to their email IDs.
 
 It is suggested to run the script with 
 
@@ -157,9 +157,9 @@ If there are different number of sheets, modify these lines accordingly.
 
 # Google Authentication
 
-If the sending email is a google email, the script will work only if two-factor authentication is not enabled. 
+If the sender email ID is a google email ID, this script will work only if two-factor authentication is not enabled. 
 
-If it is, then you have to head over to https://myaccount.google.com/lesssecureapps and enable less secure apps to use your account.
+If it is not enabled, then you have to head over to https://myaccount.google.com/lesssecureapps and enable less secure apps to use that email ID as the sender ID.
 
 Once you have used the script, you can disable this to get back security.
 
