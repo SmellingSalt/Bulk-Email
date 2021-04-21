@@ -66,9 +66,10 @@ parser = argparse.ArgumentParser(description='Emailing in Bulk.')
 parser.add_argument("--cc",required=False,type=lambda x: (str(x).lower() == 'true'),default=False, help="If you want to cc individuals")
 parser.add_argument("--bcc",required=False,type=lambda x: (str(x).lower() == 'true'),default=False, help="If you want to bcc individuals. Note that this is not tested, so use at your own risk.")
 parser.add_argument("--attachment",required=False,type=lambda x: (str(x).lower() == 'true'),default=False, help="If you want to attach files.")
-parser.add_argument("--test_mode",required=False,type=lambda x: (str(x).lower() == 'true'),default=False, help="If you want run in test mode and send random individual's mails to some predesignated test emails.")
+parser.add_argument("--test_mode",required=False,type=lambda x: (str(x).lower() == 'true'),default=False, help="If you want run in test mode but not send a random individual's email to anyone.")
+parser.add_argument("--test_mode_and_send",required=False,type=lambda x: (str(x).lower() == 'true'),default=False, help="If you want run in test mode and send a random individual's email to some predesignated test emails.")
 parser.add_argument("--use_xlsx",required=False,type=lambda x: (str(x).lower() == 'false'),default=True, help="If you want to convert the program to read the xlsx file and convert it to a .txt attachment. By default it is True.")
-parser.add_argument("--attachment_extention",required=False,type=str,default='', help="The attachment extention.")
+parser.add_argument("--attachment_extention",required=False,type=str,default=' ', help="The attachment extention.")
 
 
 args = parser.parse_args()
@@ -77,7 +78,12 @@ bcc=args.bcc
 use_attachment=args.attachment
 use_xlsx=args.use_xlsx
 test_mode=args.test_mode
-attachment_extention=parser.attachment_extention
+attachment_extention=args.attachment_extention
+test_mode_and_send=args.test_mode_and_send
+
+if test_mode_and_send and test_mode:
+    import sys
+    sys.exit("test_mode_and_send and test_mode arguments are both true. The script will not run.")
 
 subject=input("Enter the email subject. Type -1 to use the default text 'Testing' \n")
 if subject=="-1":
@@ -117,7 +123,7 @@ while bcc:
 test_counter=0
 test_addresses=[]
 starting_test=True
-while test_mode:
+while test_mode_and_send:
     if starting_test:
         address=input(f"Enter test email address of recipient {test_counter}. When you are done typing, press enter twice. \n")
         starting_test=False
@@ -183,12 +189,12 @@ if use_xlsx:
 pd.set_option('display.max_colwidth', None)
 # test_mail=['191081003@iitdh.ac.in','191081002@iitdh.ac.in']
 
-for individual in np.random.randint(len(Email_names)) if test_mode else range(len(Email_names)):
+for individual in [np.random.randint(len(Email_names))] if test_mode_and_send else range(len(Email_names)):
 # for individual in [4]:
     if use_xlsx:
         name=Email_names[individual,1]
-        roll=str(int(Email_names[individual,0]))
-        email=test_addresses if test_mode else roll+["@iitdh.ac.in"]
+        roll=str((Email_names[individual,0]))
+        email=test_addresses if test_mode_and_send else roll+"@iitdh.ac.in"
         """xlsx to Text File generation """
         #From the first sheet, extract cells A1 and B1
         mssg1=sheets[0].iloc[individual,0:2].to_string()+"\n \n \n \n" 
@@ -208,5 +214,5 @@ for individual in np.random.randint(len(Email_names)) if test_mode else range(le
                     name=name,
                     fromaddr=your_email_id,
                     password=your_password,
-                    attachment=None if attachment_extention!='' else f"Attachments/{roll}{attachment_extention}"
+                    attachment=None if attachment_extention==' ' else f"Attachments/{roll}{attachment_extention}"
             )

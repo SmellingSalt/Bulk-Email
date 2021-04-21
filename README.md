@@ -65,11 +65,17 @@ The script uses the details entered in `Summary.xlsx` and creates a `.txt ` file
 
 If you want to run the script in a test mode not risking accidentally sending the wrong file to the wrong recipient, you can run the script as
 
-``` bash
+```bash
 python email.py --test_mode True
 ```
 
-It will prompt you to enter some test emails, that you don't mind sending it to, for example it can be your own email address again or trusted party's email address.
+If you want to send an email but to some test emails, and not the intended recipients, run
+
+``` bash
+python email.py --test_mode_and_send True
+```
+
+This will prompt you to enter some test emails, that you don't mind sending it to, for example it can be your own email address again or trusted party's email address.
 
 This will make the script perform the exact same way, but instead of sending the email to every recipient, it randomly selects an individual from the list of individuals in `email_names.csv` generates the necessary email body/attachments and sends their intended email to the test email addresses.
 
