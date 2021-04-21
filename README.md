@@ -159,7 +159,7 @@ If there are different number of sheets, modify these lines accordingly.
 
 If the sending email is a google email, the script will work only if two-factor authentication is not enabled. 
 
-If it is, then you have to head over to https://myaccount.google.com/lesssecureapps and enable less secure apps to use your account.
+If it is not enabled, then you have to head over to https://myaccount.google.com/lesssecureapps and enable less secure apps to use your account.
 
 Once you have used the script, you can disable this to get back security.
 
