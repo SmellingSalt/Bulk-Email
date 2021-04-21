@@ -70,6 +70,7 @@ parser.add_argument("--test_mode",required=False,type=lambda x: (str(x).lower() 
 parser.add_argument("--test_mode_and_send",required=False,type=lambda x: (str(x).lower() == 'true'),default=False, help="If you want run in test mode and send a random individual's email to some predesignated test emails.")
 parser.add_argument("--use_xlsx",required=False,type=lambda x: (str(x).lower() == 'false'),default=True, help="If you want to convert the program to read the xlsx file and convert it to a .txt attachment. By default it is True.")
 parser.add_argument("--attachment_extention",required=False,type=str,default=' ', help="The attachment extention.")
+parser.add_argument("--email_extention",required=False,type=str,default='@itdh.ac.in', help="The email ID extention. for example, in the address xyz@abc.com, type in @abc.com here.")
 
 
 args = parser.parse_args()
@@ -80,7 +81,7 @@ use_xlsx=args.use_xlsx
 test_mode=args.test_mode
 attachment_extention=args.attachment_extention
 test_mode_and_send=args.test_mode_and_send
-
+email_extention=args.email_extention
 if test_mode_and_send and test_mode:
     import sys
     sys.exit("test_mode_and_send and test_mode arguments are both true. The script will not run.")
@@ -194,7 +195,7 @@ for individual in [np.random.randint(len(Email_names))] if test_mode_and_send el
     if use_xlsx:
         name=Email_names[individual,1]
         roll=str((Email_names[individual,0]))
-        email=test_addresses if test_mode_and_send else roll+"@iitdh.ac.in"
+        email=test_addresses if test_mode_and_send else roll++email_extention
         """xlsx to Text File generation """
         #From the first sheet, extract cells A1 and B1
         mssg1=sheets[0].iloc[individual,0:2].to_string()+"\n \n \n \n" 
