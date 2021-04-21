@@ -1,6 +1,6 @@
 # Bulk-Email
 
-This repository contains a simple python script that can send emails to multiple individuals. This code was built to primarily solve the problem of sending grades and scores of students individually. 
+This repository contains a simple python script that can send emails to multiple individuals. This code was built to primarily solve the problem of sending grades and scores of students individually to their email IDs.
 
 It is suggested to run the script with 
 
