@@ -211,10 +211,10 @@ for individual in [np.random.randint(len(Email_names))] if test_mode_and_send el
         textfile.close()
     f=1
     body=f"{greeting} {name},\n {common_body_with_salutation}"
-    mysendmail(email,
-                    body,
-                    name=name,
-                    fromaddr=your_email_id,
-                    password=your_password,
-                    attachment=f"Attachments/{roll}.txt" if attachment_extention==' ' else f"Attachments/{roll}{attachment_extention}"
-            )
+    # mysendmail(email,
+    #                 body,
+    #                 name=name,
+    #                 fromaddr=your_email_id,
+    #                 password=your_password,
+    #                 attachment=f"Attachments/{roll}.txt" if attachment_extention==' ' else f"Attachments/{roll}{attachment_extention}"
+    #         )
