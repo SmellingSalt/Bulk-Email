@@ -1,5 +1,15 @@
 # Bulk-Email
 
+## Dependancies
+
+Download this repository and `cd` into the folder. Then run the following to install all the dependencies
+
+```bash
+pip install -r requirements.txt
+```
+
+
+
 This repository contains a simple python script that can send emails to multiple individuals. This code was built to primarily solve the problem of sending grades and scores of students individually to their email IDs.
 
 It is suggested to run the script with 
@@ -105,9 +115,7 @@ if use_xlsx:
 and
 
 ```python
-for work in ["Sheet 1 Title", "Sheet 2 Title"]:
-    a=sheets[itr].iloc[individual,2:] #Consider the cells from column C onward, row 'itr'
-    a=a.to_string()+'\n \n \n'
+for work in ["Sheet 1 Title", "Sheet 2 Title"]:    a=sheets[itr].iloc[individual,2:] #Consider the cells from column C onward, row 'itr'    a=a.to_string()+'\n \n \n'
 ```
 
 
@@ -115,19 +123,13 @@ for work in ["Sheet 1 Title", "Sheet 2 Title"]:
 ### If there is only one sheet use
 
 ```python
-#%% XLSX Sheet Code
-Email_names=np.loadtxt('email_names.csv',dtype=str,delimiter=',')
-if use_xlsx:
-    sheet1=pd.read_excel("Summary.xlsx",sheet_name=0)
-    sheets=[sheet1]  
+#%% XLSX Sheet CodeEmail_names=np.loadtxt('email_names.csv',dtype=str,delimiter=',')if use_xlsx:    sheet1=pd.read_excel("Summary.xlsx",sheet_name=0)    sheets=[sheet1]  
 ```
 
 and
 
 ```python
-for work in ["Sheet 1 Title"]:
-    a=sheets[itr].iloc[individual,2:] #Consider the cells from column C onward, row 'itr'
-    a=a.to_string()+'\n \n \n'  
+for work in ["Sheet 1 Title"]:    a=sheets[itr].iloc[individual,2:] #Consider the cells from column C onward, row 'itr'    a=a.to_string()+'\n \n \n'  
 ```
 
 
@@ -135,22 +137,13 @@ for work in ["Sheet 1 Title"]:
 ### If there are four sheets, use
 
 ```python
-#%% XLSX Sheet Code
-Email_names=np.loadtxt('email_names.csv',dtype=str,delimiter=',')
-if use_xlsx:
-    sheet1=pd.read_excel("Summary.xlsx",sheet_name=0)
-    sheet2=pd.read_excel("Summary.xlsx",sheet_name=1)
-    sheet3=pd.read_excel("Summary.xlsx",sheet_name=2)
-    sheet4=pd.read_excel("Summary.xlsx",sheet_name=3)
-    sheets=[sheet0,sheet1,sheet2,sheet3]
+#%% XLSX Sheet CodeEmail_names=np.loadtxt('email_names.csv',dtype=str,delimiter=',')if use_xlsx:    sheet1=pd.read_excel("Summary.xlsx",sheet_name=0)    sheet2=pd.read_excel("Summary.xlsx",sheet_name=1)    sheet3=pd.read_excel("Summary.xlsx",sheet_name=2)    sheet4=pd.read_excel("Summary.xlsx",sheet_name=3)    sheets=[sheet0,sheet1,sheet2,sheet3]
 ```
 
 and
 
 ``` python
-for work in ["Sheet 1 Title", "Sheet 2 Title","Sheet 3 Title", "Sheet 4 Title"]:
-    a=sheets[itr].iloc[individual,2:] #Consider the cells from column C onward, row 'itr'
-    a=a.to_string()+'\n \n \n'  
+for work in ["Sheet 1 Title", "Sheet 2 Title","Sheet 3 Title", "Sheet 4 Title"]:    a=sheets[itr].iloc[individual,2:] #Consider the cells from column C onward, row 'itr'    a=a.to_string()+'\n \n \n'  
 ```
 
 If there are different number of sheets, modify these lines accordingly. 
