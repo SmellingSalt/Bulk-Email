@@ -15,7 +15,7 @@ This repository contains a simple python script that can send emails to multiple
 It is suggested to run the script with 
 
 ```bash
-python email.py --test_mode True
+python Email.py --test_mode True
 ```
 
 to run it in test mode and not send any emails, but run through everything else. More details about test mode are detailed below.
@@ -27,7 +27,7 @@ The `Summary.xlsx`file with multiple sheets gives is for reference. It gives an 
 You can run the code by executing 
 
 ``` bash
-python email.py
+python Email.py
 ```
 
 An example message body 
@@ -52,10 +52,10 @@ As an example, if you want to send a `PDF` to each individual, make sure that th
 You can run the code by executing 
 
 ``` bash
-python email.py --use_xlsx False --attachment_extention .pdf
+python Email.py --use_xlsx False --attachment_extention .pdf
 ```
 
-The arguments `--use_xlsx` and `--attachment_extention` can be combined with other arguments as well. You can type `python email.py --help`  to know about the other supported arguments.
+The arguments `--use_xlsx` and `--attachment_extention` can be combined with other arguments as well. You can type `python Email.py --help`  to know about the other supported arguments.
 
 An example message body 
 
@@ -76,13 +76,13 @@ The script uses the details entered in `Summary.xlsx` and creates a `.txt ` file
 If you want to run the script in a test mode not risking accidentally sending the wrong file to the wrong recipient, you can run the script as
 
 ```bash
-python email.py --test_mode True
+python Email.py --test_mode True
 ```
 
 If you want to send an email but to some test emails, and not the intended recipients, run
 
 ``` bash
-python email.py --test_mode_and_send True
+python Email.py --test_mode_and_send True
 ```
 
 This will prompt you to enter some test emails, that you don't mind sending it to, for example it can be your own email address again or trusted party's email address.
