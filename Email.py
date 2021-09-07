@@ -24,19 +24,19 @@ def mysendmail(toaddrs,final_msg,**kwargs):
     toaddr = toaddrs
     msg = MIMEMultipart()
     msg['From'] = fromaddr
-    msg['To'] = ",".join(toaddr)
+    msg['To'] = ",".join(toaddr) if len(toaddrs)>1 else toaddr[0]
     msg['Cc']=",".join(cc_addresses)
-    msg['Subject'] = subject
+    msg['Subject'] = subject + name + str(roll)
     msg.attach(MIMEText(final_msg, 'plain'))
     FILENAME = kwargs.get('attachment',None)
     if type(FILENAME)!=type(None):
-        for filename in FILENAME:
-            attachment = open(filename, "rb")
-            part = MIMEBase('application', 'octet-stream')
-            part.set_payload((attachment).read())
-            encoders.encode_base64(part)
-            part.add_header('Content-Disposition', "attachment; filename= %s" % filename)
-            msg.attach(part)
+    # for filename in FILENAME:
+        attachment = open(filename, "rb")
+        part = MIMEBase('application', 'octet-stream')
+        part.set_payload((attachment).read())
+        encoders.encode_base64(part)
+        part.add_header('Content-Disposition', "attachment; filename= %s" % FILENAME[11:])
+        msg.attach(part)
     
     server = smtplib.SMTP('smtp.gmail.com', 587)
     server.ehlo()
@@ -196,7 +196,7 @@ for individual in [np.random.randint(len(Email_names))] if test_mode_and_send el
     if use_xlsx:
         name=Email_names[individual,1]
         roll=str((Email_names[individual,0]))
-        email=test_addresses if test_mode_and_send else roll++email_extention
+        email=test_addresses if test_mode_and_send else roll+email_extention
         """xlsx to Text File generation """
         #From the first sheet, extract cells A1 and B1
         mssg1=sheets[0].iloc[individual,0:2].to_string()+"\n \n \n \n" 
@@ -211,10 +211,10 @@ for individual in [np.random.randint(len(Email_names))] if test_mode_and_send el
         textfile.close()
     f=1
     body=f"{greeting} {name},\n {common_body_with_salutation}"
-    # mysendmail(email,
-    #                 body,
-    #                 name=name,
-    #                 fromaddr=your_email_id,
-    #                 password=your_password,
-    #                 attachment=f"Attachments/{roll}.txt" if attachment_extention==' ' else f"Attachments/{roll}{attachment_extention}"
-    #         )
+    mysendmail(email,
+                    body,
+                    name=name,
+                    fromaddr=your_email_id,
+                    password=your_password,
+                    attachment=f"Attachments/{roll}.txt" if attachment_extention==' ' else f"Attachments/{roll}{attachment_extention}"
+            )
