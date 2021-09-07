@@ -1,4 +1,4 @@
-email==6.0.0
+email==6.0.0a1
 xlrd==2.0.1
 pandas==1.2.4
 openpyxl==3.0.7
