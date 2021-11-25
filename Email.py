@@ -24,14 +24,14 @@ def mysendmail(toaddrs,final_msg,**kwargs):
     toaddr = toaddrs
     msg = MIMEMultipart()
     msg['From'] = fromaddr
-    msg['To'] = ",".join(toaddr) if len(toaddrs)>1 else toaddr[0]
-    msg['Cc']=",".join(cc_addresses)
+    msg['To'] = toaddr#",".join(toaddr) if len(toaddrs)>1 else toaddr[0]
+    # msg['Cc']=",".join(cc_addresses)
     msg['Subject'] = subject + name + str(roll)
     msg.attach(MIMEText(final_msg, 'plain'))
     FILENAME = kwargs.get('attachment',None)
     if type(FILENAME)!=type(None):
     # for filename in FILENAME:
-        attachment = open(filename, "rb")
+        attachment = open(FILENAME, "rb")
         part = MIMEBase('application', 'octet-stream')
         part.set_payload((attachment).read())
         encoders.encode_base64(part)
@@ -46,9 +46,9 @@ def mysendmail(toaddrs,final_msg,**kwargs):
         if not test_mode:
             server.login(fromaddr, password)
         text = msg.as_string()
-        toadd=[toaddr]+cc_addresses+bcc_addresses
+        toadd=toaddr#+cc_addresses+bcc_addresses
         if not test_mode:
-            server.sendmail(fromaddr, toaddr, text)
+            server.sendmail(fromaddr, toadd, text)
             server.quit()
         if not test_mode:
             print(" Sent mail to "+name, toaddr)
@@ -71,7 +71,7 @@ parser.add_argument("--test_mode",required=False,type=lambda x: (str(x).lower() 
 parser.add_argument("--test_mode_and_send",required=False,type=lambda x: (str(x).lower() == 'true'),default=False, help="If you want run in test mode and send a random individual's email to some predesignated test emails.")
 parser.add_argument("--use_xlsx",required=False,type=lambda x: (str(x).lower() == 'false'),default=True, help="If you want to convert the program to read the xlsx file and convert it to a .txt attachment. By default it is True.")
 parser.add_argument("--attachment_extention",required=False,type=str,default=' ', help="The attachment extention.")
-parser.add_argument("--email_extention",required=False,type=str,default='@itdh.ac.in', help="The email ID extention. for example, in the address xyz@abc.com, type in @abc.com here.")
+parser.add_argument("--email_extention",required=False,type=str,default='@iitdh.ac.in', help="The email ID extention. for example, in the address xyz@abc.com, type in @abc.com here.")
 
 
 args = parser.parse_args()
@@ -180,8 +180,8 @@ common_body_with_salutation= '\n'.join(lines)
 Email_names=np.loadtxt('email_names.csv',dtype=str,delimiter=',')
 if use_xlsx:
     sheet1=pd.read_excel("Summary.xlsx",sheet_name=0)
-    sheet2=pd.read_excel("Summary.xlsx",sheet_name=1)
-    sheets=[sheet1,sheet2]
+    # sheet2=pd.read_excel("Summary.xlsx",sheet_name=1)
+    sheets=[sheet1]
     # na_filler=-12345678
     for sheet in sheets:
         sheet.dropna()
@@ -201,7 +201,7 @@ for individual in [np.random.randint(len(Email_names))] if test_mode_and_send el
         #From the first sheet, extract cells A1 and B1
         mssg1=sheets[0].iloc[individual,0:2].to_string()+"\n \n \n \n" 
         itr=0
-        for work in ["Quiz 1", "Quiz 2"]:
+        for work in ["Summary "]:
             a=sheets[itr].iloc[individual,2:] #Consider the cells from column C onward, row 'itr'
             a=a.to_string()+'\n \n \n'
             mssg1=mssg1+work.center(60,'-')+'\n'+a
@@ -216,5 +216,6 @@ for individual in [np.random.randint(len(Email_names))] if test_mode_and_send el
                     name=name,
                     fromaddr=your_email_id,
                     password=your_password,
-                    attachment=f"Attachments/{roll}.txt" if attachment_extention==' ' else f"Attachments/{roll}{attachment_extention}"
+                    attachment=f"Text Files/{roll}.txt" if attachment_extention==' ' else f"Attachments/{roll}{attachment_extention}"
             )
+bb=1
